@@ -1,0 +1,83 @@
+<%@page import="com.lsphate.PhotosWorker"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page import="java.util.*"%>
+<%@ page import="java.sql.*"%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Photo Database</title>
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body>
+	<br>
+	<div class="navigator">
+		<a href="upload.jsp">Upload</a>
+		<a id="currenttab" href="view_users.jsp">View By Users</a>
+		<a href="view_photos.jsp">View By Photos</a>
+		<a href="view_tags.jsp">View By Tags</a>
+	</div>
+	<form action="view_users.jsp" method="post">
+		<h3>Choose an user:</h3>
+		<table>
+			<%
+				List<String> list = PhotosWorker.GetUsers();
+				Iterator<String> it = list.iterator();
+				while (it.hasNext()) {
+					out.print("<td><input type=\"submit\" name=\"user\" value=\"");
+					out.print(it.next());
+					out.print("\"></td>");
+				}
+			%>
+		</table>
+	</form>
+	<br>
+	<br>
+	<from>
+		<table>
+		<%
+			String u = request.getParameter("user");
+			if (u != null)
+			{
+				out.print(u + "'s Albums:");
+				out.print("<tr><th>Album name</th><th>Views</th><th>Date</th>");
+				List<String> aList = PhotosWorker.GetUserAlbum(u);
+				Iterator<String> ait = aList.iterator();
+				while (ait.hasNext()) {
+					out.print("<tr>");
+					for (int i = 0; i < 3; i++) {
+						out.print("<td>");
+						out.print(ait.next());
+						out.print("</td>");
+					}
+					out.print("</tr>");
+				}
+			}
+		%>
+		</table>
+		<br>
+		<br>
+		<table>
+		<%
+			if (u != null)
+			{
+				out.print(u + "'s Photos:");
+				out.print("<tr><th>Photo name</th><th>Views</th><th>Date</th>");
+				List<String> pList = PhotosWorker.GetUserPhoto(u);
+				Iterator<String> pit = pList.iterator();
+				while (pit.hasNext()) {
+					out.print("<tr>");
+					for (int i = 0; i < 3; i++) {
+						out.print("<td>");
+						out.print(pit.next());
+						out.print("</td>");
+					}
+					out.print("</tr>");
+				}
+			}
+		%>
+		</table>
+	</from>
+</body>
+</html>

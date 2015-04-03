@@ -1,0 +1,19 @@
+* { font-size: 12px; font-family: Verdana }
+
+input { border: 1px solid #ccc }
+
+a#currenttab {
+    border-bottom:1px solid #fff
+}
+
+a { color: black; text-decoration:none;
+    padding:5px; border: 1px solid #aaa;
+}
+
+a:hover { background: #ccc }
+
+table { border-collapse:collapse }
+td { border: 1px solid #ccc; padding: 3px }
+th { border: 1px solid #ccc; padding: 3px; background: #636f88; color: white }
+
+.navigator { border-bottom:1px solid #aaa; width:365px; padding:5px }
