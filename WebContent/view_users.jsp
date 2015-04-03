@@ -18,6 +18,7 @@
 		<a href="view_photos.jsp">View By Photos</a>
 		<a href="view_tags.jsp">View By Tags</a>
 	</div>
+	<br>
 	<form action="view_users.jsp" method="post">
 		<h3>Choose an user:</h3>
 		<table>
@@ -42,7 +43,7 @@
 			{
 				out.print(u + "'s Albums:");
 				out.print("<tr><th>Album name</th><th>Views</th><th>Date</th>");
-				List<String> aList = PhotosWorker.GetUserAlbum(u);
+				List<String> aList = PhotosWorker.GetUserAlbums(u);
 				Iterator<String> ait = aList.iterator();
 				while (ait.hasNext()) {
 					out.print("<tr>");
@@ -64,7 +65,7 @@
 			{
 				out.print(u + "'s Photos:");
 				out.print("<tr><th>Photo name</th><th>Views</th><th>Date</th>");
-				List<String> pList = PhotosWorker.GetUserPhoto(u);
+				List<String> pList = PhotosWorker.GetUserPhotos(u);
 				Iterator<String> pit = pList.iterator();
 				while (pit.hasNext()) {
 					out.print("<tr>");

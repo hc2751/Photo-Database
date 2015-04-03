@@ -20,7 +20,8 @@
 	</div>
 	<br>
 	<form action="view_photos.jsp" method="post">
-		<table>
+		<h3>Select view preference:</h3>
+		<table rules="none">
 			<td>
 				<h3>Show exif:</h3>
 				<input type="radio" name="withExif" value="true"> True
@@ -33,7 +34,7 @@
 			</td>
 		</table>
 		<br>
-		<input type="submit" value="Submit">
+		<input type="submit" value="submit">
 	</form>
 	<br>
 	<br>

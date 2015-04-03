@@ -90,7 +90,7 @@ public class PhotosWorker {
 		return list;
 	}
 	
-	public static List GetUserAlbum(String user) {
+	public static List GetUserAlbums(String user) {
 		List<String> list = new ArrayList<String>();
 		Connection conn = null;
 		ResultSet rset = null;
@@ -111,8 +111,8 @@ public class PhotosWorker {
 		}
 		return list;
 	}
-	
-	public static List GetUserPhoto(String user) {
+
+	public static List GetUserPhotos(String user) {
 		List<String> list = new ArrayList<String>();
 		Connection conn = null;
 		ResultSet rset = null;
@@ -127,6 +127,24 @@ public class PhotosWorker {
 				list.add(rset.getString("photo_name"));
 				list.add(rset.getString("views"));
 				list.add(rset.getString("date"));
+			}
+			conn.close();
+		} catch (Exception ex) {
+		}
+		return list;
+	}
+
+	public static List GetTags() {
+		List<String> list = new ArrayList<String>();
+		Connection conn = null;
+		ResultSet rset = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url, "hc2751", "database");
+			Statement stmt = conn.createStatement();
+			rset = stmt.executeQuery("select tag_name from tags;");
+			while (rset.next()) {
+				list.add(rset.getString("tag_name"));
 			}
 			conn.close();
 		} catch (Exception ex) {
