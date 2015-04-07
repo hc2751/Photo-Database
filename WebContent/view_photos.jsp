@@ -1,6 +1,5 @@
-<%@page import="com.lsphate.PhotosWorker"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page import="com.lsphate.PhotosWorker"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.sql.*"%>
 
@@ -11,8 +10,10 @@
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body>
+	<h1>Welcome to the Photo Database!</h1>
 	<br>
 	<div class="navigator">
+		<a href="register.jsp">Registration</a>
 		<a href="upload.jsp">Upload</a>
 		<a href="view_users.jsp">View By Users</a>
 		<a id="currenttab" href="view_photos.jsp">View By Photos</a>
@@ -21,7 +22,8 @@
 	<br>
 	<form action="view_photos.jsp" method="post">
 		<h3>Select view preference:</h3>
-		<table rules="none">
+		<table rules="none" frame="void">
+		<tr>
 			<td>
 				<h3>Show exif:</h3>
 				<input type="radio" name="withExif" value="true"> True
@@ -32,6 +34,7 @@
 				<input type="radio" name="withDevices" value="true"> True
 				<input type="radio" name="withDevices" value="false"> False
 			</td>
+		</tr>
 		</table>
 		<br>
 		<input type="submit" value="submit">
@@ -109,7 +112,6 @@
 				}
 			%>
 		</table>
-		<!-- <br> <input type="submit" value="Delete"> -->
 	</form>
 </body>
 </html>

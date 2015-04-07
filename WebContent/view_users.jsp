@@ -1,6 +1,5 @@
-<%@page import="com.lsphate.PhotosWorker"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page import="com.lsphate.PhotosWorker"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.sql.*"%>
 
@@ -11,8 +10,10 @@
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body>
+	<h1>Welcome to the Photo Database!</h1>
 	<br>
 	<div class="navigator">
+		<a href="register.jsp">Registration</a>
 		<a href="upload.jsp">Upload</a>
 		<a id="currenttab" href="view_users.jsp">View By Users</a>
 		<a href="view_photos.jsp">View By Photos</a>
@@ -35,50 +36,50 @@
 	</form>
 	<br>
 	<br>
-	<from>
+	<form>
 		<table>
-		<%
-			String u = request.getParameter("user");
-			if (u != null)
-			{
-				out.print(u + "'s Albums:");
-				out.print("<tr><th>Album name</th><th>Views</th><th>Date</th>");
-				List<String> aList = PhotosWorker.GetUserAlbums(u);
-				Iterator<String> ait = aList.iterator();
-				while (ait.hasNext()) {
-					out.print("<tr>");
-					for (int i = 0; i < 3; i++) {
-						out.print("<td>");
-						out.print(ait.next());
-						out.print("</td>");
+			<%
+				String u = request.getParameter("user");
+				if (u != null)
+				{
+					out.print(u + "'s Albums:");
+					out.print("<tr><th>Album name</th><th>Views</th><th>Date</th>");
+					List<String> aList = PhotosWorker.GetUserAlbums(u);
+					Iterator<String> ait = aList.iterator();
+					while (ait.hasNext()) {
+						out.print("<tr>");
+						for (int i = 0; i < 3; i++) {
+							out.print("<td>");
+							out.print(ait.next());
+							out.print("</td>");
+						}
+						out.print("</tr>");
 					}
-					out.print("</tr>");
 				}
-			}
-		%>
+			%>
 		</table>
 		<br>
 		<br>
 		<table>
-		<%
-			if (u != null)
-			{
-				out.print(u + "'s Photos:");
-				out.print("<tr><th>Photo name</th><th>Views</th><th>Date</th>");
-				List<String> pList = PhotosWorker.GetUserPhotos(u);
-				Iterator<String> pit = pList.iterator();
-				while (pit.hasNext()) {
-					out.print("<tr>");
-					for (int i = 0; i < 3; i++) {
-						out.print("<td>");
-						out.print(pit.next());
-						out.print("</td>");
+			<%
+				if (u != null)
+				{
+					out.print(u + "'s Photos:");
+					out.print("<tr><th>Photo name</th><th>Views</th><th>Date</th>");
+					List<String> pList = PhotosWorker.GetUserPhotos(u);
+					Iterator<String> pit = pList.iterator();
+					while (pit.hasNext()) {
+						out.print("<tr>");
+						for (int i = 0; i < 3; i++) {
+							out.print("<td>");
+							out.print(pit.next());
+							out.print("</td>");
+						}
+						out.print("</tr>");
 					}
-					out.print("</tr>");
 				}
-			}
-		%>
+			%>
 		</table>
-	</from>
+	</form>
 </body>
 </html>

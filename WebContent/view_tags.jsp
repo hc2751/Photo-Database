@@ -1,6 +1,5 @@
-<%@page import="com.lsphate.PhotosWorker"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page import="com.lsphate.PhotosWorker"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.sql.*"%>
 
@@ -11,11 +10,14 @@
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body>
+	<h1>Welcome to the Photo Database!</h1>
 	<br>
 	<div class="navigator">
-		<a href="upload.jsp">Upload</a> <a href="view_users.jsp">View By
-			Users</a> <a href="view_photos.jsp">View By Photos</a> <a id="currenttab"
-			href="view_tags.jsp">View By Tags</a>
+		<a href="register.jsp">Registration</a>
+		<a href="upload.jsp">Upload</a>
+		<a href="view_users.jsp">View By Users</a>
+		<a href="view_photos.jsp">View By Photos</a>
+		<a id="currenttab" href="view_tags.jsp">View By Tags</a>
 	</div>
 	<br>
 	<form>
@@ -44,6 +46,29 @@
 				}
 			}
 		%>
+		
+		<br>
+		<br>
+		<table>
+		<% 
+			if(tags != null) {
+				List<String> taglist = PhotosWorker.GetTagsTable(tags);
+				Iterator<String> tagit = taglist.iterator();
+				out.print("<tr><th>Selected Tags</th><th>Photo_names</th><th>Photo_ids</th><th>Number of Views</th>");
+				while(tagit.hasNext()) {
+					out.print("<tr>");
+					for (int i = 0; i < 4; i++) {
+						out.print("<td>");
+						out.print(tagit.next());
+						out.print("</td>");
+					}
+					out.print("</tr>");
+				}
+			}
+		%>
+		</table>
 	</form>
+
+	
 </body>
 </html>
