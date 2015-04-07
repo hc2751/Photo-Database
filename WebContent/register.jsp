@@ -40,7 +40,7 @@
 			String username = request.getParameter("username");
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
-			if (username != null && email != null && password != null) PhotosWorker.NewUsers(username, email, password);			
+			if (username != null && email != null && password != null) PhotosWorker.NewUsers(username, email, password);
 		%>
 	</form>
 </body>

@@ -46,18 +46,18 @@
 				}
 			}
 		%>
-		
+
 		<br>
 		<br>
 		<table>
-		<% 
+		<%
 			if(tags != null) {
 				List<String> taglist = PhotosWorker.GetTagsTable(tags);
 				Iterator<String> tagit = taglist.iterator();
-				out.print("<tr><th>Selected Tags</th><th>Photo_names</th><th>Photo_ids</th><th>Number of Views</th>");
+				out.print("<tr><th>Tag</th><th>Photo name</th><th>Views</th>");
 				while(tagit.hasNext()) {
 					out.print("<tr>");
-					for (int i = 0; i < 4; i++) {
+					for (int i = 0; i < 3; i++) {
 						out.print("<td>");
 						out.print(tagit.next());
 						out.print("</td>");
@@ -68,7 +68,5 @@
 		%>
 		</table>
 	</form>
-
-	
 </body>
 </html>

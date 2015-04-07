@@ -1,14 +1,12 @@
 package com.lsphate;
-
 import java.sql.*;
 import java.util.*;
 
 public class PhotosWorker {
 	final static String url = "jdbc:mysql://cs4111.ckmuhiwllrah.us-west-2.rds.amazonaws.com:3306/cs4111";
 
-	@SuppressWarnings("rawtypes")
-	public static List GetPhotos(int type) {
-		List<String> list = new ArrayList<String>();
+	public static ArrayList<String> GetPhotos(int type) {
+		ArrayList<String> list = new ArrayList<String>();
 		Connection conn = null;
 		ResultSet rset = null;
 		try {
@@ -72,9 +70,8 @@ public class PhotosWorker {
 		return list;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public static List GetUsers() {
-		List<String> list = new ArrayList<String>();
+	public static ArrayList<String> GetUsers() {
+		ArrayList<String> list = new ArrayList<String>();
 		Connection conn = null;
 		ResultSet rset = null;
 		try {
@@ -90,7 +87,7 @@ public class PhotosWorker {
 		}
 		return list;
 	}
-	
+
 	public static void NewUsers(String newusername, String newemail, String newpassword) {
 		Connection conn = null;
 		try {
@@ -105,9 +102,8 @@ public class PhotosWorker {
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
-	public static List GetUserAlbums(String user) {
-		List<String> list = new ArrayList<String>();
+	public static ArrayList<String> GetUserAlbums(String user) {
+		ArrayList<String> list = new ArrayList<String>();
 		Connection conn = null;
 		ResultSet rset = null;
 		try {
@@ -127,9 +123,8 @@ public class PhotosWorker {
 		return list;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public static List GetUserPhotos(String user) {
-		List<String> list = new ArrayList<String>();
+	public static ArrayList<String> GetUserPhotos(String user) {
+		ArrayList<String> list = new ArrayList<String>();
 		Connection conn = null;
 		ResultSet rset = null;
 		try {
@@ -150,9 +145,8 @@ public class PhotosWorker {
 		return list;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public static List GetTags() {
-		List<String> list = new ArrayList<String>();
+	public static ArrayList<String> GetTags() {
+		ArrayList<String> list = new ArrayList<String>();
 		Connection conn = null;
 		ResultSet rset = null;
 		try {
@@ -168,10 +162,9 @@ public class PhotosWorker {
 		}
 		return list;
 	}
-	
-	@SuppressWarnings("rawtypes")
-	public static List GetTagsTable(String[] tags) {
-		List<String> list = new ArrayList<String>();
+
+	public static ArrayList<String> GetTagsTable(String[] tags) {
+		ArrayList<String> list = new ArrayList<String>();
 		Connection conn = null;
 		ResultSet rset = null;
 		try {
@@ -185,12 +178,11 @@ public class PhotosWorker {
 				else temp = "or t.tag_name = \"" + tags[i] + "\"";
 				query += temp;
 			}
-			
+
 			rset = stmt.executeQuery("select t.tag_name, p.photo_name, p.pid, p.views from tagged t, photo p where (" + query +") AND t.pid = p.pid order by tag_name;");
 			while (rset.next()) {
 				list.add(rset.getString("tag_name"));
 				list.add(rset.getString("photo_name"));
-				list.add(rset.getString("pid"));
 				list.add(rset.getString("views"));
 			}
 			conn.close();
