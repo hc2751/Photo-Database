@@ -19,7 +19,6 @@
 		<a href="view_photos.jsp">View By Photos</a>
 		<a id="currenttab" href="view_tags.jsp">View By Tags</a>
 	</div>
-	<br>
 	<form>
 		<h3>Select the tag(s) you'd like to lookup:</h3>
 		<select name="tag" multiple size="10">

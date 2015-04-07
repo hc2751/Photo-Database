@@ -19,20 +19,20 @@
 		<a href="view_photos.jsp">View By Photos</a>
 		<a href="view_tags.jsp">View By Tags</a>
 	</div>
-	<br>
 	<form action="register.jsp" method="post">
+		<h3>Register a new user:</h3>
 		<table>
 			<tr>
-				<td>Username</td>
+				<td>Nickname:</td>
 				<td><input type="text" name="username"></td>
 			</tr>
 			<tr>
-				<td>Email</td>
+				<td>Email:</td>
 				<td><input type="text" name="email"></td>
 			</tr>
 			<tr>
 				<td>Password</td>
-				<td><input type="text" name="password"></td>
+				<td><input type="password" name="password"></td>
 			</tr>
 		</table>
 		<br> <input type="submit" value="submit">

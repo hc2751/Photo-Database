@@ -1,4 +1,5 @@
 package com.lsphate;
+
 import java.sql.*;
 import java.util.*;
 
@@ -65,7 +66,8 @@ public class PhotosWorker {
 				break;
 			}
 			conn.close();
-		} catch (Exception ex) {
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return list;
 	}
@@ -83,22 +85,30 @@ public class PhotosWorker {
 				list.add(rset.getString("display_name"));
 			}
 			conn.close();
-		} catch (Exception ex) {
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return list;
 	}
 
-	public static void NewUsers(String newusername, String newemail, String newpassword) {
+	public static void NewUsers(String newusername, String newemail,
+			String newpassword) {
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url, "hc2751", "database");
 			Statement stmt = conn.createStatement();
-			String display_name=newusername, username=newemail, password=newpassword;
-			//System.out.println("INSERT INTO user (display_name, username, password) VALUES (" + display_name + ", " + username + ", " + password + ");");
-			stmt.executeUpdate("INSERT INTO user (display_name, username, password) VALUES ( \"" + display_name + "\", \"" + username + "\", \"" + password + "\");");
+			String display_name = newusername, username = newemail, password = newpassword;
+			stmt.executeUpdate("INSERT INTO user (display_name, username, password) VALUES ( \""
+					+ display_name
+					+ "\", \""
+					+ username
+					+ "\", \""
+					+ password
+					+ "\");");
 			conn.close();
-		} catch (Exception ex) {
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -110,7 +120,8 @@ public class PhotosWorker {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url, "hc2751", "database");
 			Statement stmt = conn.createStatement();
-			String q = "select cb.album_name, a.views, cb.date from user u, album a, created_by cb where u.uid = cb.uid && cb.album_name = a.album_name && u.display_name = \"" + user + "\";";
+			String q = "select cb.album_name, a.views, cb.date from user u, album a, created_by cb where u.uid = cb.uid && cb.album_name = a.album_name && u.display_name = \""
+					+ user + "\";";
 			rset = stmt.executeQuery(q);
 			while (rset.next()) {
 				list.add(rset.getString("album_name"));
@@ -118,7 +129,8 @@ public class PhotosWorker {
 				list.add(rset.getString("date"));
 			}
 			conn.close();
-		} catch (Exception ex) {
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return list;
 	}
@@ -131,8 +143,9 @@ public class PhotosWorker {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url, "hc2751", "database");
 			Statement stmt = conn.createStatement();
-			String q = "select p.photo_name, p.views, ub.date from user u, photo p, uploaded_by ub where u.uid = ub.uid && p.pid = ub.pid && u.display_name = \"" + user + "\";";
-			//System.out.println(q);
+			String q = "select p.photo_name, p.views, ub.date from user u, photo p, uploaded_by ub where u.uid = ub.uid && p.pid = ub.pid && u.display_name = \""
+					+ user + "\";";
+			// System.out.println(q);
 			rset = stmt.executeQuery(q);
 			while (rset.next()) {
 				list.add(rset.getString("photo_name"));
@@ -140,7 +153,8 @@ public class PhotosWorker {
 				list.add(rset.getString("date"));
 			}
 			conn.close();
-		} catch (Exception ex) {
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return list;
 	}
@@ -158,7 +172,8 @@ public class PhotosWorker {
 				list.add(rset.getString("tag_name"));
 			}
 			conn.close();
-		} catch (Exception ex) {
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return list;
 	}
@@ -173,22 +188,62 @@ public class PhotosWorker {
 			Statement stmt = conn.createStatement();
 			String temp;
 			String query = "";
-			for(int i = 0; i < tags.length; i++) {
-				if (i == 0) temp = "t.tag_name = \"" + tags[i] + "\"";
-				else temp = "or t.tag_name = \"" + tags[i] + "\"";
+			for (int i = 0; i < tags.length; i++) {
+				if (i == 0)
+					temp = "t.tag_name = \"" + tags[i] + "\"";
+				else
+					temp = "or t.tag_name = \"" + tags[i] + "\"";
 				query += temp;
 			}
 
-			rset = stmt.executeQuery("select t.tag_name, p.photo_name, p.pid, p.views from tagged t, photo p where (" + query +") AND t.pid = p.pid order by tag_name;");
+			rset = stmt
+					.executeQuery("select t.tag_name, p.photo_name, p.pid, p.views from tagged t, photo p where ("
+							+ query + ") AND t.pid = p.pid order by tag_name;");
 			while (rset.next()) {
 				list.add(rset.getString("tag_name"));
 				list.add(rset.getString("photo_name"));
 				list.add(rset.getString("views"));
 			}
 			conn.close();
-		} catch (Exception ex) {
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return list;
+	}
+
+	public static boolean IsAuthorized(String email, String password) {
+		Connection conn = null;
+		ResultSet rset = null;
+		boolean exists = false;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url, "hc2751", "database");
+			Statement stmt = conn.createStatement();
+			rset = stmt.executeQuery("select * from user where username = '"
+					+ email + "' && password = '" + password + "';");
+			exists = rset.next();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return exists;
+	}
+
+	public static void InsertPhoto(String username, String filename, int views,
+			String tags) {
+		Connection conn = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url, "hc2751", "database");
+			String q = "INSERT INTO photo (photo_name, views) VALUES ('"
+					+ filename + "', " + views + ");";
+			// System.out.println(q);
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate(q);
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

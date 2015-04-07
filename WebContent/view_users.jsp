@@ -19,7 +19,6 @@
 		<a href="view_photos.jsp">View By Photos</a>
 		<a href="view_tags.jsp">View By Tags</a>
 	</div>
-	<br>
 	<form action="view_users.jsp" method="post">
 		<h3>Choose an user:</h3>
 		<table>
