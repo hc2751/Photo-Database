@@ -120,10 +120,10 @@ public class PhotosWorker {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url, "hc2751", "database");
 			Statement stmt = conn.createStatement();
-//			String q1 = "select cb.album_name, a.views, cb.date from user u, album a, created_by cb where u.uid = cb.uid && cb.album_name = a.album_name && u.display_name = \""
-//					+ user + "\";";
-			String q = "select temp1.album_name, temp1.views, temp1.date, temp2.num from (select cb.album_name, a.views, cb.date from user u, album a, created_by cb where u.uid = cb.uid && cb.album_name = a.album_name && u.display_name = \""
-					+ user + "\") temp1, (select album_name, count(pid) as num from collection group by album_name) temp2 where temp1.album_name = temp2.album_name;";
+			String q = "select temp1.album_name, temp1.views, temp1.date, temp2.num "
+					+ "from (select cb.album_name, a.views, cb.date from user u, album a, created_by cb where u.uid = cb.uid && cb.album_name = a.album_name && u.display_name = \""
+					+ user
+					+ "\") temp1, (select album_name, count(pid) as num from collection group by album_name) temp2 where temp1.album_name = temp2.album_name;";
 			rset = stmt.executeQuery(q);
 			while (rset.next()) {
 				list.add(rset.getString("album_name"));
@@ -146,7 +146,8 @@ public class PhotosWorker {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url, "hc2751", "database");
 			Statement stmt = conn.createStatement();
-			String q = "select p.photo_name, p.views, ub.date, c.album_name from user u, photo p, uploaded_by ub, collection c where u.uid = ub.uid && p.pid = ub.pid && u.display_name = \""
+			String q = "select p.photo_name, p.views, ub.date, c.album_name from user u, photo p, uploaded_by ub, collection c "
+					+ "where u.uid = ub.uid && p.pid = ub.pid && u.display_name = \""
 					+ user + "\" && p.pid = c.pid;";
 			rset = stmt.executeQuery(q);
 			while (rset.next()) {
@@ -249,4 +250,70 @@ public class PhotosWorker {
 		}
 	}
 
+	public static ArrayList<String> GetMakers() {
+		ArrayList<String> list = new ArrayList<>();
+		Connection conn = null;
+		ResultSet rset = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url, "hc2751", "database");
+			Statement stmt = conn.createStatement();
+			rset = stmt.executeQuery("select distinct maker from devices;");
+			while (rset.next()) {
+				list.add(rset.getString("maker"));
+			}
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public static ArrayList<String> GetDevices(String maker) {
+		ArrayList<String> list = new ArrayList<>();
+		Connection conn = null;
+		ResultSet rset = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url, "hc2751", "database");
+			Statement stmt = conn.createStatement();
+			rset = stmt
+					.executeQuery("select device_name from devices where maker = \""
+							+ maker + "\";");
+			while (rset.next()) {
+				list.add(rset.getString("device_name"));
+			}
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public static ArrayList<String> GetDevicePhotos(String device) {
+		ArrayList<String> list = new ArrayList<>();
+		Connection conn = null;
+		ResultSet rset = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url, "hc2751", "database");
+			Statement stmt = conn.createStatement();
+			rset = stmt
+					.executeQuery("select u.display_name, p.photo_name, p.views, ub.date, temp.lenses_name "
+							+ "from user u, photo p, uploaded_by ub, (select * from taken_by where device_name = \""
+							+ device
+							+ "\") temp where p.pid = temp.pid && p.pid = ub.pid && u.uid = ub.uid;");
+			while (rset.next()) {
+				list.add(rset.getString("display_name"));
+				list.add(rset.getString("photo_name"));
+				list.add(rset.getString("views"));
+				list.add(rset.getString("date"));
+				list.add(rset.getString("lenses_name"));
+			}
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 }

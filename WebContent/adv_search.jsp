@@ -16,10 +16,11 @@
 	<br>
 	<div class="navigator">
 		<a href="register.jsp">Registration</a>
-		<a id="currenttab" href="upload.jsp">Upload</a>
+		<a href="upload.jsp">Upload</a>
 		<a href="view_users.jsp">View By Users</a>
 		<a href="view_photos.jsp">View By Photos</a>
 		<a href="view_tags.jsp">View By Tags</a>
+		<a href="view_devices.jsp">View By Devices</a>
 		<a id="currenttab" href="adv_search.jsp">Advanced Search</a>
 	</div>
 

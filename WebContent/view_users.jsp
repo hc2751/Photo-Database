@@ -18,6 +18,7 @@
 		<a id="currenttab" href="view_users.jsp">View By Users</a>
 		<a href="view_photos.jsp">View By Photos</a>
 		<a href="view_tags.jsp">View By Tags</a>
+		<a href="view_devices.jsp">View By Devices</a>
 		<a href="adv_search.jsp">Advanced Search</a>
 	</div>
 	<form action="view_users.jsp" method="post">
@@ -40,9 +41,8 @@
 		<table>
 			<%
 				String u = request.getParameter("user");
-				if (u != null)
-				{
-					out.print(u + "'s Albums:");
+				if (u != null) {
+					out.print("<h3>" + u + "'s Albums:</h3>");
 					out.print("<tr><th>Album name</th><th>Views</th><th>Date</th><th>Number of Photos</th>");
 					List<String> aList = PhotosWorker.GetUserAlbums(u);
 					Iterator<String> ait = aList.iterator();
@@ -59,12 +59,10 @@
 			%>
 		</table>
 		<br>
-		<br>
 		<table>
 			<%
-				if (u != null)
-				{
-					out.print(u + "'s Photos:");
+				if (u != null) {
+					out.print("<h3>" + u + "'s Photos:</h3>");
 					out.print("<tr><th>Photo name</th><th>Views</th><th>Date</th><th>Album</th>");
 					List<String> pList = PhotosWorker.GetUserPhotos(u);
 					Iterator<String> pit = pList.iterator();

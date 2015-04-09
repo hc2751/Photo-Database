@@ -18,9 +18,10 @@
 		<a href="view_users.jsp">View By Users</a>
 		<a href="view_photos.jsp">View By Photos</a>
 		<a id="currenttab" href="view_tags.jsp">View By Tags</a>
+		<a href="view_devices.jsp">View By Devices</a>
 		<a href="adv_search.jsp">Advanced Search</a>
 	</div>
-	<form>
+	<form action="view_tags.jsp" method="post">
 		<h3>Select the tag(s) you'd like to lookup:</h3>
 		<select name="tag" multiple size="10">
 			<%
@@ -32,7 +33,10 @@
 					out.print("</option>");
 				}
 			%>
-		</select> <br> <br> <input type="submit" value="submit">
+		</select>
+		<br>
+		<br>
+		<input type="submit" value="submit">
 	</form>
 	<br>
 	<br>
@@ -40,14 +44,12 @@
 		<%
 			String tags[] = request.getParameterValues("tag");
 			if (tags != null) {
-				out.print("You've selected the following tags:");
+				out.print("<h3>Your selection(s):</h3>");
 				for (int i = 0; i < tags.length; i++) {
 					out.print("<li>" + tags[i] + "</li>");
 				}
 			}
 		%>
-
-		<br>
 		<br>
 		<table>
 		<%
