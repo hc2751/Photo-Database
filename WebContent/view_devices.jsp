@@ -58,18 +58,22 @@
 			<%
 				String d = request.getParameter("device");
 				if (d != null) {
-					out.print("<h3>Photos taken by " + d + ":</h3>");
-					out.print("<tr><th>Uploader</th><th>Photo name</th><th>Views</th><th>Upload date</th><th>Lenses</th>");
 					List<String> plist = PhotosWorker.GetDevicePhotos(d);
-					Iterator<String> pit = plist.iterator();
-					while (pit.hasNext()) {
-						out.print("<tr>");
-						for (int i = 0; i < 5; i++) {
-							out.print("<td>");
-							out.print(pit.next());
-							out.print("</td>");
+					if (plist.isEmpty() == false) {
+						out.print("<h3>Photos taken by " + d + ":</h3>");
+						out.print("<tr><th>Uploader</th><th>Photo name</th><th>Views</th><th>Upload date</th><th>Lenses</th>");
+						Iterator<String> pit = plist.iterator();
+						while (pit.hasNext()) {
+							out.print("<tr>");
+							for (int i = 0; i < 5; i++) {
+								out.print("<td>");
+								out.print(pit.next());
+								out.print("</td>");
+							}
+							out.print("</tr>");
 						}
-						out.print("</tr>");
+					} else {
+						out.print("<h3>No results.</h3>");
 					}
 				}
 		%>

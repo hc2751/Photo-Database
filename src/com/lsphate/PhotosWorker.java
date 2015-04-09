@@ -1,7 +1,9 @@
 package com.lsphate;
 
 import java.sql.*;
+import java.text.*;
 import java.util.*;
+import java.util.Date;
 
 public class PhotosWorker {
 	final static String url = "jdbc:mysql://cs4111.ckmuhiwllrah.us-west-2.rds.amazonaws.com:3306/cs4111";
@@ -146,9 +148,11 @@ public class PhotosWorker {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url, "hc2751", "database");
 			Statement stmt = conn.createStatement();
-			String q = "select p.photo_name, p.views, ub.date, c.album_name from user u, photo p, uploaded_by ub, collection c "
+			String q = "select p.photo_name, p.views, ub.date, c.album_name "
+					+ "from user u, uploaded_by ub, photo p "
+					+ "left outer join collection c on p.pid = c.pid "
 					+ "where u.uid = ub.uid && p.pid = ub.pid && u.display_name = \""
-					+ user + "\" && p.pid = c.pid;";
+					+ user + "\";";
 			rset = stmt.executeQuery(q);
 			while (rset.next()) {
 				list.add(rset.getString("photo_name"));
@@ -244,10 +248,55 @@ public class PhotosWorker {
 			// System.out.println(q);
 			Statement stmt = conn.createStatement();
 			stmt.executeUpdate(q);
+			int pid = GetSpecPid(filename);
+			int uid = GetSpecUid(username);
+			DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+			Date date = Calendar.getInstance().getTime();
+			String today = formatter.format(date);
+			q = "insert into uploaded_by values (" + pid + ", " + uid + ", \"" + today + "\");";
+			stmt.executeUpdate(q);
 			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static int GetSpecPid(String filename) {
+		int pid = 0;
+		Connection conn = null;
+		ResultSet rset = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url, "hc2751", "database");
+			Statement stmt = conn.createStatement();
+			rset = stmt.executeQuery("select pid from photo where photo_name = \"" + filename + "\";");
+			while (rset.next()) {
+				pid = Integer.parseInt(rset.getString("pid"));
+			}
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return pid;
+	}
+	
+	public static int GetSpecUid(String username) {
+		int uid = 0;
+		Connection conn = null;
+		ResultSet rset = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url, "hc2751", "database");
+			Statement stmt = conn.createStatement();
+			rset = stmt.executeQuery("select uid from user where username = \"" + username + "\";");
+			while (rset.next()) {
+				uid = Integer.parseInt(rset.getString("uid"));
+			}
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return uid;
 	}
 
 	public static ArrayList<String> GetMakers() {
@@ -310,6 +359,108 @@ public class PhotosWorker {
 				list.add(rset.getString("date"));
 				list.add(rset.getString("lenses_name"));
 			}
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public static ArrayList<String> AdvSearchUser(String search) {
+		ArrayList<String> list = new ArrayList<>();
+		Connection conn = null;
+		ResultSet rset = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url, "hc2751", "database");
+			String q = "SELECT* from user where display_name = \"" + search
+					+ "\";";
+			// System.out.println(q);
+			list.add("from User Table : ");
+			Statement stmt = conn.createStatement();
+			rset = stmt.executeQuery(q);
+			while (rset.next()) {
+				list.add(rset.getString("uid"));
+				list.add(rset.getString("display_name"));
+				list.add(rset.getString("username"));
+				list.add(rset.getString("password"));
+			}
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public static ArrayList<String> AdvSearchAlbum(String search) {
+		ArrayList<String> list = new ArrayList<>();
+		Connection conn = null;
+		ResultSet rset = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url, "hc2751", "database");
+			String q = "SELECT* from album where album_name = \"" + search
+					+ "\";";
+			// System.out.println(q);
+			list.add("from Album Table : ");
+			Statement stmt = conn.createStatement();
+			rset = stmt.executeQuery(q);
+			while (rset.next()) {
+				list.add(rset.getString("album_name"));
+				list.add(rset.getString("views"));
+			}
+
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public static ArrayList<String> AdvSearchPhoto(String search) {
+		ArrayList<String> list = new ArrayList<>();
+		Connection conn = null;
+		ResultSet rset = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url, "hc2751", "database");
+			String q = "SELECT* from photo where photo_name = \"" + search
+					+ "\";";
+			// System.out.println(q);
+			list.add("from Photo Table : ");
+			Statement stmt = conn.createStatement();
+			rset = stmt.executeQuery(q);
+			while (rset.next()) {
+				list.add(rset.getString("pid"));
+				list.add(rset.getString("photo_name"));
+				list.add(rset.getString("views"));
+			}
+
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public static ArrayList<String> AdvSearchDevice(String search) {
+		ArrayList<String> list = new ArrayList<>();
+		Connection conn = null;
+		ResultSet rset = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url, "hc2751", "database");
+			String q = "SELECT* from devices where device_name = \"" + search
+					+ "\";";
+			// System.out.println(q);
+			list.add("from Device Table : ");
+			Statement stmt = conn.createStatement();
+			rset = stmt.executeQuery(q);
+			while (rset.next()) {
+				list.add(rset.getString("device_name"));
+				list.add(rset.getString("maker"));
+			}
+
 			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();

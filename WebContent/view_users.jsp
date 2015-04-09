@@ -42,18 +42,22 @@
 			<%
 				String u = request.getParameter("user");
 				if (u != null) {
-					out.print("<h3>" + u + "'s Albums:</h3>");
-					out.print("<tr><th>Album name</th><th>Views</th><th>Date</th><th>Number of Photos</th>");
 					List<String> aList = PhotosWorker.GetUserAlbums(u);
-					Iterator<String> ait = aList.iterator();
-					while (ait.hasNext()) {
-						out.print("<tr>");
-						for (int i = 0; i < 4; i++) {
-							out.print("<td>");
-							out.print(ait.next());
-							out.print("</td>");
+					if (aList.isEmpty() == false) {
+						out.print("<h3>" + u + "'s Albums:</h3>");
+						out.print("<tr><th>Album name</th><th>Views</th><th>Date</th><th>Number of Photos</th>");
+						Iterator<String> ait = aList.iterator();
+						while (ait.hasNext()) {
+							out.print("<tr>");
+							for (int i = 0; i < 4; i++) {
+								out.print("<td>");
+								out.print(ait.next());
+								out.print("</td>");
+							}
+							out.print("</tr>");
 						}
-						out.print("</tr>");
+					} else {
+						out.print("<h3>No results.</h3>");
 					}
 				}
 			%>
@@ -62,22 +66,25 @@
 		<table>
 			<%
 				if (u != null) {
-					out.print("<h3>" + u + "'s Photos:</h3>");
-					out.print("<tr><th>Photo name</th><th>Views</th><th>Date</th><th>Album</th>");
 					List<String> pList = PhotosWorker.GetUserPhotos(u);
-					Iterator<String> pit = pList.iterator();
-					while (pit.hasNext()) {
-						out.print("<tr>");
-						for (int i = 0; i < 4; i++) {
-							out.print("<td>");
-							out.print(pit.next());
-							out.print("</td>");
+					if (pList.isEmpty() == false) {
+						out.print("<h3>" + u + "'s Photos:</h3>");
+						out.print("<tr><th>Photo name</th><th>Views</th><th>Date</th><th>Album</th>");
+						Iterator<String> pit = pList.iterator();
+						while (pit.hasNext()) {
+							out.print("<tr>");
+							for (int i = 0; i < 4; i++) {
+								out.print("<td>");
+								out.print(pit.next());
+								out.print("</td>");
+							}
+							out.print("</tr>");
 						}
-						out.print("</tr>");
 					}
 				}
 			%>
 		</table>
+
 	</form>
 </body>
 </html>

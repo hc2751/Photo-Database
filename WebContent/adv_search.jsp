@@ -23,6 +23,116 @@
 		<a href="view_devices.jsp">View By Devices</a>
 		<a id="currenttab" href="adv_search.jsp">Advanced Search</a>
 	</div>
-
+	<form action="adv_search.jsp" method="post">
+		<h3>Input keywords to search:</h3>
+		<table>
+			<tr>
+				<td>
+					<input type="text" name="username">
+					<input type="submit" value="search">
+				</td>
+			</tr>
+		</table>
+		<br>
+		<table>
+			<%
+				String search = request.getParameter("username");
+				if (search != null) {
+					out.print("<h3>Search Result : </h3>");
+				}
+			%>
+		</table>
+		<table>
+			<%
+				if (search != null) {
+					List<String> list = PhotosWorker.AdvSearchUser(search);
+					if (list.size() != 1) {
+						Iterator<String> it = list.iterator();
+						out.print("<tr><th>uid</th><th>display_name</th><th>username</th><th>password</th>");
+						out.print((list.size() - 1) / 4 + " result(s) ");
+						out.print(it.next());
+						while (it.hasNext()) {
+							out.print("<tr>");
+							for (int i = 0; i < 4; i++) {
+								out.print("<td>");
+								out.print(it.next());
+								out.print("</td>");
+							}
+							out.print("</tr>");
+						}
+					}
+				}
+			%>
+		</table>
+		<table>
+			<%
+				if (search != null) {
+					List<String> list = PhotosWorker.AdvSearchPhoto(search);
+					if (list.size() != 1) {
+						Iterator<String> it = list.iterator();
+						out.print("<tr><th>pid</th><th>photo_name</th><th>views</th>");
+						out.print((list.size() - 1) / 3 + " result(s) ");
+						out.print(it.next());
+						while (it.hasNext()) {
+							out.print("<tr>");
+							for (int i = 0; i < 3; i++) {
+								out.print("<td>");
+								out.print(it.next());
+								out.print("</td>");
+							}
+							out.print("</tr>");
+						}
+					}
+				}
+				out.print("<br>");
+			%>
+		</table>
+		<table>
+			<%
+				if (search != null) {
+					List<String> list = PhotosWorker.AdvSearchAlbum(search);
+					if (list.size() != 1) {
+						Iterator<String> it = list.iterator();
+						out.print("<tr><th>album_name</th><th>views</th>");
+						out.print((list.size() - 1) / 2 + " result(s) ");
+						out.print(it.next());
+						while (it.hasNext()) {
+							out.print("<tr>");
+							for (int i = 0; i < 2; i++) {
+								out.print("<td>");
+								out.print(it.next());
+								out.print("</td>");
+							}
+							out.print("</tr>");
+						}
+					}
+				}
+				out.print("<br>");
+			%>
+		</table>
+		<table>
+			<%
+				if (search != null) {
+					List<String> list = PhotosWorker.AdvSearchDevice(search);
+					if (list.size() != 1) {
+						Iterator<String> it = list.iterator();
+						out.print("<tr><th>device_name</th><th>maker</th>");
+						out.print((list.size() - 1) / 2 + " result(s) ");
+						out.print(it.next());
+						while (it.hasNext()) {
+							out.print("<tr>");
+							for (int i = 0; i < 2; i++) {
+								out.print("<td>");
+								out.print(it.next());
+								out.print("</td>");
+							}
+							out.print("</tr>");
+						}
+					}
+				}
+				out.print("<br>");
+			%>
+		</table>
+	</form>
 </body>
 </html>
