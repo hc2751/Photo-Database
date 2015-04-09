@@ -18,18 +18,19 @@
 		<a href="view_users.jsp">View By Users</a>
 		<a id="currenttab" href="view_photos.jsp">View By Photos</a>
 		<a href="view_tags.jsp">View By Tags</a>
+		<a href="adv_search.jsp">Advanced Search</a>
 	</div>
 	<form action="view_photos.jsp" method="post">
 		<h3>Select view preference:</h3>
 		<table rules="none">
 		<tr>
 			<td>
-				Show exif:
+				Include EXIF:
 				<input type="radio" name="withExif" value="true"> True
 				<input type="radio" name="withExif" value="false"> False
 			</td>
 			<td>
-				Show devices:
+				Include Devices:
 				<input type="radio" name="withDevices" value="true"> True
 				<input type="radio" name="withDevices" value="false"> False
 			</td>

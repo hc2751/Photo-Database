@@ -18,6 +18,7 @@
 		<a href="view_users.jsp">View By Users</a>
 		<a href="view_photos.jsp">View By Photos</a>
 		<a href="view_tags.jsp">View By Tags</a>
+		<a href="adv_search.jsp">Advanced Search</a>
 	</div>
 	<form action="register.jsp" method="post">
 		<h3>Register a new user:</h3>

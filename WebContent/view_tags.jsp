@@ -18,6 +18,7 @@
 		<a href="view_users.jsp">View By Users</a>
 		<a href="view_photos.jsp">View By Photos</a>
 		<a id="currenttab" href="view_tags.jsp">View By Tags</a>
+		<a href="adv_search.jsp">Advanced Search</a>
 	</div>
 	<form>
 		<h3>Select the tag(s) you'd like to lookup:</h3>

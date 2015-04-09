@@ -18,6 +18,7 @@
 		<a id="currenttab" href="view_users.jsp">View By Users</a>
 		<a href="view_photos.jsp">View By Photos</a>
 		<a href="view_tags.jsp">View By Tags</a>
+		<a href="adv_search.jsp">Advanced Search</a>
 	</div>
 	<form action="view_users.jsp" method="post">
 		<h3>Choose an user:</h3>
@@ -42,12 +43,12 @@
 				if (u != null)
 				{
 					out.print(u + "'s Albums:");
-					out.print("<tr><th>Album name</th><th>Views</th><th>Date</th>");
+					out.print("<tr><th>Album name</th><th>Views</th><th>Date</th><th>Number of Photos</th>");
 					List<String> aList = PhotosWorker.GetUserAlbums(u);
 					Iterator<String> ait = aList.iterator();
 					while (ait.hasNext()) {
 						out.print("<tr>");
-						for (int i = 0; i < 3; i++) {
+						for (int i = 0; i < 4; i++) {
 							out.print("<td>");
 							out.print(ait.next());
 							out.print("</td>");
@@ -64,12 +65,12 @@
 				if (u != null)
 				{
 					out.print(u + "'s Photos:");
-					out.print("<tr><th>Photo name</th><th>Views</th><th>Date</th>");
+					out.print("<tr><th>Photo name</th><th>Views</th><th>Date</th><th>Album</th>");
 					List<String> pList = PhotosWorker.GetUserPhotos(u);
 					Iterator<String> pit = pList.iterator();
 					while (pit.hasNext()) {
 						out.print("<tr>");
-						for (int i = 0; i < 3; i++) {
+						for (int i = 0; i < 4; i++) {
 							out.print("<td>");
 							out.print(pit.next());
 							out.print("</td>");

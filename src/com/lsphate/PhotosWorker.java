@@ -7,7 +7,7 @@ public class PhotosWorker {
 	final static String url = "jdbc:mysql://cs4111.ckmuhiwllrah.us-west-2.rds.amazonaws.com:3306/cs4111";
 
 	public static ArrayList<String> GetPhotos(int type) {
-		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<String> list = new ArrayList<>();
 		Connection conn = null;
 		ResultSet rset = null;
 		try {
@@ -73,7 +73,7 @@ public class PhotosWorker {
 	}
 
 	public static ArrayList<String> GetUsers() {
-		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<String> list = new ArrayList<>();
 		Connection conn = null;
 		ResultSet rset = null;
 		try {
@@ -113,20 +113,23 @@ public class PhotosWorker {
 	}
 
 	public static ArrayList<String> GetUserAlbums(String user) {
-		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<String> list = new ArrayList<>();
 		Connection conn = null;
 		ResultSet rset = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url, "hc2751", "database");
 			Statement stmt = conn.createStatement();
-			String q = "select cb.album_name, a.views, cb.date from user u, album a, created_by cb where u.uid = cb.uid && cb.album_name = a.album_name && u.display_name = \""
-					+ user + "\";";
+//			String q1 = "select cb.album_name, a.views, cb.date from user u, album a, created_by cb where u.uid = cb.uid && cb.album_name = a.album_name && u.display_name = \""
+//					+ user + "\";";
+			String q = "select temp1.album_name, temp1.views, temp1.date, temp2.num from (select cb.album_name, a.views, cb.date from user u, album a, created_by cb where u.uid = cb.uid && cb.album_name = a.album_name && u.display_name = \""
+					+ user + "\") temp1, (select album_name, count(pid) as num from collection group by album_name) temp2 where temp1.album_name = temp2.album_name;";
 			rset = stmt.executeQuery(q);
 			while (rset.next()) {
 				list.add(rset.getString("album_name"));
 				list.add(rset.getString("views"));
 				list.add(rset.getString("date"));
+				list.add(rset.getString("num"));
 			}
 			conn.close();
 		} catch (Exception e) {
@@ -136,21 +139,21 @@ public class PhotosWorker {
 	}
 
 	public static ArrayList<String> GetUserPhotos(String user) {
-		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<String> list = new ArrayList<>();
 		Connection conn = null;
 		ResultSet rset = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url, "hc2751", "database");
 			Statement stmt = conn.createStatement();
-			String q = "select p.photo_name, p.views, ub.date from user u, photo p, uploaded_by ub where u.uid = ub.uid && p.pid = ub.pid && u.display_name = \""
-					+ user + "\";";
-			// System.out.println(q);
+			String q = "select p.photo_name, p.views, ub.date, c.album_name from user u, photo p, uploaded_by ub, collection c where u.uid = ub.uid && p.pid = ub.pid && u.display_name = \""
+					+ user + "\" && p.pid = c.pid;";
 			rset = stmt.executeQuery(q);
 			while (rset.next()) {
 				list.add(rset.getString("photo_name"));
 				list.add(rset.getString("views"));
 				list.add(rset.getString("date"));
+				list.add(rset.getString("album_name"));
 			}
 			conn.close();
 		} catch (Exception e) {
@@ -160,7 +163,7 @@ public class PhotosWorker {
 	}
 
 	public static ArrayList<String> GetTags() {
-		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<String> list = new ArrayList<>();
 		Connection conn = null;
 		ResultSet rset = null;
 		try {
@@ -179,7 +182,7 @@ public class PhotosWorker {
 	}
 
 	public static ArrayList<String> GetTagsTable(String[] tags) {
-		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<String> list = new ArrayList<>();
 		Connection conn = null;
 		ResultSet rset = null;
 		try {

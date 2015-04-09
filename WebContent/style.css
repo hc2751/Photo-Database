@@ -1,5 +1,7 @@
 * { font-size: 12px; font-family: Verdana }
 
+h1 {font-size: 24px}
+
 input { border: 1px solid #ccc }
 
 a#currenttab {
@@ -16,4 +18,4 @@ table { border-collapse:collapse }
 td { border: 1px solid #ccc; padding: 3px }
 th { border: 1px solid #ccc; padding: 3px; background: #636f88; color: white }
 
-.navigator { border-bottom:1px solid #aaa; width:455px; padding:5px }
+.navigator { border-bottom:1px solid #aaa; padding:5px }

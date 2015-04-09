@@ -3,7 +3,6 @@
 <%@ page import="java.io.*"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.sql.*"%>
-<%@ page import="javax.servlet.http.Part"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -21,6 +20,7 @@
 		<a href="view_users.jsp">View By Users</a>
 		<a href="view_photos.jsp">View By Photos</a>
 		<a href="view_tags.jsp">View By Tags</a>
+		<a href="adv_search.jsp">Advanced Search</a>
 	</div>
 	<form action="upload.jsp" method="post">
 		<h3>Upload a new photo:</h3>
