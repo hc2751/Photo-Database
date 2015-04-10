@@ -253,14 +253,15 @@ public class PhotosWorker {
 			DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
 			Date date = Calendar.getInstance().getTime();
 			String today = formatter.format(date);
-			q = "insert into uploaded_by values (" + pid + ", " + uid + ", \"" + today + "\");";
+			q = "insert into uploaded_by values (" + pid + ", " + uid + ", \""
+					+ today + "\");";
 			stmt.executeUpdate(q);
 			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static int GetSpecPid(String filename) {
 		int pid = 0;
 		Connection conn = null;
@@ -269,7 +270,9 @@ public class PhotosWorker {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url, "hc2751", "database");
 			Statement stmt = conn.createStatement();
-			rset = stmt.executeQuery("select pid from photo where photo_name = \"" + filename + "\";");
+			rset = stmt
+					.executeQuery("select pid from photo where photo_name = \""
+							+ filename + "\";");
 			while (rset.next()) {
 				pid = Integer.parseInt(rset.getString("pid"));
 			}
@@ -279,7 +282,7 @@ public class PhotosWorker {
 		}
 		return pid;
 	}
-	
+
 	public static int GetSpecUid(String username) {
 		int uid = 0;
 		Connection conn = null;
@@ -288,7 +291,8 @@ public class PhotosWorker {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url, "hc2751", "database");
 			Statement stmt = conn.createStatement();
-			rset = stmt.executeQuery("select uid from user where username = \"" + username + "\";");
+			rset = stmt.executeQuery("select uid from user where username = \""
+					+ username + "\";");
 			while (rset.next()) {
 				uid = Integer.parseInt(rset.getString("uid"));
 			}

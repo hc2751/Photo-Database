@@ -48,9 +48,8 @@
 					List<String> list = PhotosWorker.AdvSearchUser(search);
 					if (list.size() != 1) {
 						Iterator<String> it = list.iterator();
+						out.print((list.size() - 1) / 4 + " result(s) " + it.next());
 						out.print("<tr><th>uid</th><th>display_name</th><th>username</th><th>password</th>");
-						out.print((list.size() - 1) / 4 + " result(s) ");
-						out.print(it.next());
 						while (it.hasNext()) {
 							out.print("<tr>");
 							for (int i = 0; i < 4; i++) {
@@ -70,9 +69,8 @@
 					List<String> list = PhotosWorker.AdvSearchPhoto(search);
 					if (list.size() != 1) {
 						Iterator<String> it = list.iterator();
+						out.print((list.size() - 1) / 3 + " result(s) " + it.next());
 						out.print("<tr><th>pid</th><th>photo_name</th><th>views</th>");
-						out.print((list.size() - 1) / 3 + " result(s) ");
-						out.print(it.next());
 						while (it.hasNext()) {
 							out.print("<tr>");
 							for (int i = 0; i < 3; i++) {
@@ -93,9 +91,8 @@
 					List<String> list = PhotosWorker.AdvSearchAlbum(search);
 					if (list.size() != 1) {
 						Iterator<String> it = list.iterator();
+						out.print((list.size() - 1) / 2 + " result(s) " + it.next());
 						out.print("<tr><th>album_name</th><th>views</th>");
-						out.print((list.size() - 1) / 2 + " result(s) ");
-						out.print(it.next());
 						while (it.hasNext()) {
 							out.print("<tr>");
 							for (int i = 0; i < 2; i++) {
@@ -116,9 +113,8 @@
 					List<String> list = PhotosWorker.AdvSearchDevice(search);
 					if (list.size() != 1) {
 						Iterator<String> it = list.iterator();
+						out.print((list.size() - 1) / 2 + " result(s) " + it.next());
 						out.print("<tr><th>device_name</th><th>maker</th>");
-						out.print((list.size() - 1) / 2 + " result(s) ");
-						out.print(it.next());
 						while (it.hasNext()) {
 							out.print("<tr>");
 							for (int i = 0; i < 2; i++) {
